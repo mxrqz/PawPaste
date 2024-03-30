@@ -1,0 +1,128 @@
+{
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist"
+  },
+  "package": {
+    "productName": "PawPaste",
+    "version": "1.0.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true,
+        "execute": true,
+        "sidecar": true
+      },
+      "globalShortcut": {
+        "all": true
+      },
+      "window": {
+        "create": true,
+        "center": true,
+        "hide": true,
+        "setAlwaysOnTop": true,
+        "setFocus": true,
+        "setPosition": true,
+        "setSkipTaskbar": true,
+        "show": true,
+        "setDecorations": true,
+        "setSize": true
+      },
+      "clipboard": {
+        "all": true,
+        "readText": true,
+        "writeText": true
+      },
+      "notification": {
+        "all": true
+      },
+      "fs": {
+        "all": true,
+        "copyFile": true,
+        "createDir": true,
+        "exists": true,
+        "readDir": true,
+        "readFile": true,
+        "removeDir": true,
+        "removeFile": true,
+        "renameFile": true,
+        "scope": [
+          "$APPLOCALDATA/*"
+        ],
+        "writeFile": true
+      },
+      "path": {
+        "all": true
+      },
+      "dialog": {
+        "message": true
+      }
+    },
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
+    "windows": [
+      { 
+        "title": "PawPaste",
+        "label": "pawpaste",
+        "width": 600,
+        "height": 250,
+        "visible": true,
+        "titleBarStyle": "Transparent",
+        "hiddenTitle": true,
+        "alwaysOnTop": true,
+        "closable": true,
+        "transparent": true,
+        "center": true,
+        "focus": true,
+        "theme": "Dark",
+        "decorations": false,
+        "resizable": false,
+        "url": "index.html"
+      },
+      {
+        "title": "PawCopy",
+        "label": "pawcopy",
+        "width": 450,
+        "height": 250,
+        "visible": true,
+        "titleBarStyle": "Transparent",
+        "hiddenTitle": true,
+        "alwaysOnTop": true,
+        "closable": true,
+        "transparent": true,
+        "center": true,
+        "focus": true,
+        "theme": "Dark",
+        "decorations": false,
+        "resizable": false,
+        "skipTaskbar": true,
+        "url": "copy.html"
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "PawPaste",
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "shortDescription": "PawPaste",
+      "longDescription": "PawPaste",
+      "publisher": "mxrqz"
+    }
+  }
+}

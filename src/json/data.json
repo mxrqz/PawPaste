@@ -1,0 +1,10 @@
+[
+    {
+        "title": "Exemplo de código em JavaScript",
+        "code": "for (let i = 0; i < 10; i++) {\n  console.log(i);\n}"
+    },
+    {
+        "title": "Exemplo de código em Python",
+        "code": "def greet(name):\n    print('Hello, ' + name)\n\ngreet('World')"
+    }
+]
