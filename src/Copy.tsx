@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { invoke } from '@tauri-apps/api/tauri';
-import { register } from '@tauri-apps/api/globalShortcut';
+import { register, unregister } from '@tauri-apps/api/globalShortcut';
 import { PhysicalPosition, appWindow } from "@tauri-apps/api/window";
 import { readText } from '@tauri-apps/api/clipboard';
 import { Input } from "./components/ui/input";
@@ -24,34 +24,44 @@ export default function Copy() {
     const [snippetCode, setSnippedCode] = useState('');
     const [snippetName, setSnippetName] = useState('')
 
-    register('CommandOrControl+Shift+C', async () => {
-        if (await appWindow.isVisible()) {
-            await appWindow.hide();
-        } else {
-            await invoke('copy_text');
-            await fetchClipboardText();
+    const shortcuts = async () => {
+        await register('CommandOrControl+Shift+C', async () => {
+            if (await appWindow.isVisible()) {
+                await appWindow.hide();
+            } else {
+                await invoke('copy_text');
+                await fetchClipboardText();
 
-            const mouseLocation: String = await invoke('get_mouse_location');
-            const [xStr, yStr] = mouseLocation.substring(1, mouseLocation.length - 1).split(',');
-            const x = parseInt(xStr.trim(), 10);
-            const y = parseInt(yStr.trim(), 10);
-            const physicalPosition = new PhysicalPosition(x, y)
-            await appWindow.setPosition(physicalPosition)
+                const mouseLocation: String = await invoke('get_mouse_location');
+                const [xStr, yStr] = mouseLocation.substring(1, mouseLocation.length - 1).split(',');
+                const x = parseInt(xStr.trim(), 10);
+                const y = parseInt(yStr.trim(), 10);
+                const physicalPosition = new PhysicalPosition(x, y)
+                await appWindow.setPosition(physicalPosition)
 
-            await appWindow.setSkipTaskbar(true);
-            await appWindow.center();
-            await appWindow.show();
-            await appWindow.setFocus();
-        }
-    });
+                await appWindow.setSkipTaskbar(true);
+                await appWindow.center();
+                await appWindow.show();
+                await appWindow.setFocus();
 
-    appWindow.onFocusChanged(async ({ payload: focused }) => {
-        if (focused == false) {
-            appWindow.hide();
-            setSnippetName('');
-            setSnippedCode('');
-        }
-    });
+                await register('Esc', async () => {
+                    if (await appWindow.isVisible()) {
+                        await appWindow.hide()
+                    }
+                    await unregister('Esc');
+                })
+            }
+        });
+
+        await appWindow.onFocusChanged(async ({ payload: focused }) => {
+            if (focused == false) {
+                appWindow.hide();
+                setSnippetName('');
+                setSnippedCode('');
+            }
+            await unregister('Esc');
+        });
+    }
 
     async function fetchClipboardText() {
         try {
@@ -133,6 +143,7 @@ export default function Copy() {
     useEffect(() => {
         fetchClipboardText();
         fetchData();
+        shortcuts();
     }, []);
 
     return (

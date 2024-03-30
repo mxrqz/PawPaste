@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { invoke } from '@tauri-apps/api/tauri'
-import { register } from '@tauri-apps/api/globalShortcut';
+import { register, unregister } from '@tauri-apps/api/globalShortcut';
 import { PhysicalPosition, appWindow } from "@tauri-apps/api/window";
 import { writeText } from '@tauri-apps/api/clipboard';
 import { Input } from "./components/ui/input";
@@ -45,34 +45,39 @@ export default function App() {
     }
   }
 
-  register('CommandOrControl+Shift+V', async () => {
-    if (await appWindow.isVisible()) {
-      await appWindow.hide();
-    } else {
-      const mouseLocation: String = await invoke('get_mouse_location');
-      const [xStr, yStr] = mouseLocation.substring(1, mouseLocation.length - 1).split(',');
-      const x = parseInt(xStr.trim(), 10);
-      const y = parseInt(yStr.trim(), 10);
-      const physicalPosition = new PhysicalPosition(x, y)
-      await appWindow.setPosition(physicalPosition)
-      await appWindow.setSkipTaskbar(true);
-      await appWindow.center();
-      await appWindow.show();
-      await appWindow.setFocus();
-    }
-  });
+  const shortcuts = async () => {
+    await register('CommandOrControl+Shift+V', async () => {
+      if (await appWindow.isVisible()) {
+        await appWindow.hide();
+        await unregister('esc');
+      } else {
+        const mouseLocation: String = await invoke('get_mouse_location');
+        const [xStr, yStr] = mouseLocation.substring(1, mouseLocation.length - 1).split(',');
+        const x = parseInt(xStr.trim(), 10);
+        const y = parseInt(yStr.trim(), 10);
+        const physicalPosition = new PhysicalPosition(x, y)
+        await appWindow.setPosition(physicalPosition)
+        await appWindow.setSkipTaskbar(true);
+        await appWindow.center();
+        await appWindow.show();
+        await appWindow.setFocus();
 
-  register('Esc', async () => {
-    if (await appWindow.isVisible()) {
-      await appWindow.hide()
-    }
-  })
+        await register('Esc', async () => {
+          if (await appWindow.isVisible()) {
+            await appWindow.hide()
+          }
+          await unregister('Esc');
+        })
+      }
+    });
 
-  appWindow.onFocusChanged(async ({ payload: focused }) => {
-    if (focused == false) {
-      appWindow.hide()
-    }
-  });
+    await appWindow.onFocusChanged(async ({ payload: focused }) => {
+      if (focused == false) {
+        appWindow.hide()
+      }
+      await unregister('Esc');
+    });
+  }
 
   const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -184,6 +189,7 @@ export default function App() {
   useEffect(() => {
     verifyExample();
     fetchData();
+    shortcuts();
   }, []);
 
   return (
