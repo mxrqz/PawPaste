@@ -3,7 +3,9 @@ use clipboard_win::{formats, get_clipboard, set_clipboard};
 use enigo::{Enigo, MouseControllable};
 use rsautogui::{keyboard, keyboard::Vk};
 use selection::get_text;
-use tauri::{CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu};
+use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
+use window_shadows::set_shadow;
+use window_vibrancy::apply_acrylic;
 
 #[tauri::command]
 fn paste_text() {
@@ -40,6 +42,22 @@ fn main() {
             get_mouse_location
         ])
         .system_tray(SystemTray::new().with_id("PawPaste").with_menu(tray_menu))
+        .setup(|app| {
+            let paw_paste = app.get_window("pawpaste").unwrap();
+            let paw_copy = app.get_window("pawcopy").unwrap();
+
+            #[cfg(any(windows, target_os = "macos"))]
+            set_shadow(&paw_paste, true).unwrap();
+            set_shadow(&paw_copy, true).unwrap();
+
+            #[cfg(target_os = "windows")]
+            apply_acrylic(&paw_paste, Some((125, 125, 125, 125)))
+                .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
+            apply_acrylic(&paw_copy, Some((125, 125, 125, 125)))
+                .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
+
+            Ok(())
+        })
         .on_system_tray_event(|_app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                 "quit" => {

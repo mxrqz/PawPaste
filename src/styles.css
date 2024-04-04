@@ -65,9 +65,11 @@
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  background-color: transparent;
 }
 
-body {
+body,
+html {
   background: transparent;
 }
 
@@ -76,7 +78,8 @@ body {
   height: 100vh;
   display: flex;
   justify-content: center;
-  background: linear-gradient(135deg, hsla(262, 88%, 50%, 0.651)0%, hsla(262, 88%, 13%, 0.45) 90%),
-    url(https://grainy-gradients.vercel.app/noise.svg);
+  /* background: linear-gradient(135deg, hsla(262, 88%, 50%, 0.651)0%, hsla(262, 88%, 13%, 0.45) 90%),
+    url(https://grainy-gradients.vercel.app/noise.svg); */
   border-radius: 1.5rem;
+  background: transparent;
 }

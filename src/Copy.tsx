@@ -149,7 +149,7 @@ export default function Copy() {
     return (
 
         <div className="w-full h-full flex flex-col text-white gap-2
-         bg-[#212121dc] rounded-3xl overflow-hidden p-4 text-center"
+         rounded-3xl overflow-hidden p-4 text-center"
         >
             <h1 className="mb-2 text-xs select-none">PawCopy</h1>
 

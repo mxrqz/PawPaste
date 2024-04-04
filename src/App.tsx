@@ -194,7 +194,7 @@ export default function App() {
 
   return (
 
-    <div className="w-full h-full flex flex-col justify-start text-white gap-2 bg-[#212121dc] rounded-3xl overflow-hidden p-4 text-center">
+    <div className="w-full h-full flex flex-col justify-start text-white gap-2 p-4 text-center">
       <h1 className="mb-2 text-xs select-none">PawPaste</h1>
 
       <div className="flex items-center justify-center w-full">
