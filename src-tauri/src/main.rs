@@ -55,7 +55,7 @@ fn main() {
                 .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
             apply_acrylic(&paw_copy, Some((125, 125, 125, 125)))
                 .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
-
+            
             Ok(())
         })
         .on_system_tray_event(|_app, event| match event {
