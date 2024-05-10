@@ -12,4 +12,8 @@ Para salvar um snippet, basta pressionar simultaneamente as teclas ```CTRL + SHI
 ### Usar Snippet Salvo
 Para utilizar um snippet salvo, basta pressionar simultaneamente as teclas ```CTRL + SHIFT + V```. Isso abrirá um prompt on  de você poderá selecionar o snippet desejado a partir de uma lista. Ao selecioná-lo, ele será automaticamente inserido no programa atualmente aberto.
 
+<<<<<<< HEAD
 ![pawpaste](pawpaste04.png)
+=======
+![pawcopy](pawpaste04.png)
+>>>>>>> b3b33adf0941a453b6b0b5d87f100f9aafdf9184
