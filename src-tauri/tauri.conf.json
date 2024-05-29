@@ -71,7 +71,7 @@
       { 
         "title": "PawPaste",
         "label": "pawpaste",
-        "width": 600,
+        "width": 400,
         "height": 250,
         "visible": false,
         "titleBarStyle": "Transparent",

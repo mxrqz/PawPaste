@@ -41,7 +41,7 @@ fn main() {
             copy_text,
             get_mouse_location
         ])
-        .system_tray(SystemTray::new().with_id("PawPaste").with_menu(tray_menu))
+        .system_tray(SystemTray::new().with_id("PawPaste").with_menu(tray_menu).with_tooltip("PawPaste"))
         .setup(|app| {
             let paw_paste = app.get_window("pawpaste").unwrap();
             let paw_copy = app.get_window("pawcopy").unwrap();
