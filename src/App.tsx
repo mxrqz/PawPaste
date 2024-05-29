@@ -193,7 +193,6 @@ export default function App() {
   }, []);
 
   return (
-
     <div className="w-full h-full flex flex-col justify-start text-white gap-2 p-4 text-center">
       <h1 className="mb-2 text-xs select-none">PawPaste</h1>
 
@@ -211,8 +210,8 @@ export default function App() {
 
       <Separator className="bg-[#f1f1f141]" />
 
-      <ScrollArea className="w-[568px] h-full overflow-x-hidden">
-        <div className="w-[558px] h-full overflow-hidden" style={{ userSelect: 'none' }}>
+      <ScrollArea className="w-full h-full overflow-x-hidden">
+        <div className="w-full h-full overflow-hidden" style={{ userSelect: 'none' }}>
 
           {filteredData.map((item, index) => (
             <div
